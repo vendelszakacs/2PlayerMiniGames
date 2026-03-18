@@ -16,5 +16,12 @@ public partial class MainWindow : Window
 		window.Owner = this;
 		window.Show();
 	}
+
+    private void WasdArrows_Click(object sender, RoutedEventArgs e)
+    {
+        var window = new WasdArrowsWindow();
+        window.Owner = this;
+        window.Show();
+    }
 }
 

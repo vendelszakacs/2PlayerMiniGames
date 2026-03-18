@@ -34,7 +34,12 @@
                         Margin="0,5"
                         Padding="8"
                         Click="TicTacToe_Click"/>
-			</StackPanel>
+
+                <Button Content="WASD vs Nyilak"
+                        Margin="0,5"
+                        Padding="8"
+                        Click="WasdArrows_Click"/>
+            </StackPanel>
 		</Border>
 	</Grid>
 </Window>
