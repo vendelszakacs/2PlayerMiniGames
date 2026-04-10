@@ -1,5 +1,4 @@
-﻿using _2PlayerMiniGames;
-using System.Windows;
+﻿using System.Windows;
 
 namespace _2PlayerMiniGames;
 
@@ -22,6 +21,13 @@ public partial class MainWindow : Window
         var window = new WasdArrowsWindow();
         window.Owner = this;
         window.Show();
+    }
+
+	private void Pong_Click(object sender, RoutedEventArgs e)
+	{
+		var window = new PongWindow();
+		window.Owner = this;
+		window.Show();
     }
 }
 

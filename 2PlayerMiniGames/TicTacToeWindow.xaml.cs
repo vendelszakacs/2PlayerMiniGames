@@ -34,6 +34,7 @@ public partial class TicTacToeWindow : Window
         {
             StatusText.Text = $"Nyert: {_currentPlayer}";
             _gameOver = true;
+            SetCellsEnabled(false);
             return;
         }
 
@@ -41,11 +42,18 @@ public partial class TicTacToeWindow : Window
         {
             StatusText.Text = "Döntetlen!";
             _gameOver = true;
+            SetCellsEnabled(false);
             return;
         }
 
         _currentPlayer = _currentPlayer == 'X' ? 'O' : 'X';
         StatusText.Text = $"Következő: {_currentPlayer}";
+    }
+
+    private void SetCellsEnabled(bool enabled)
+    {
+        foreach (var cell in _cells)
+            cell.IsEnabled = enabled;
     }
 
     private bool CheckWin(char player)
@@ -90,6 +98,7 @@ public partial class TicTacToeWindow : Window
             cell.Content = string.Empty;
         }
 
+        SetCellsEnabled(true);
         _currentPlayer = 'X';
         _gameOver = false;
         StatusText.Text = "Következő: X";

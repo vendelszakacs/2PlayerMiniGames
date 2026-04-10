@@ -1,7 +1,7 @@
 ﻿<Window x:Class="_2PlayerMiniGames.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="2PlayerMiniGames" Height="350" Width="400"
+        Title="2PlayerMiniGames" Height="500" Width="600"
         WindowStartupLocation="CenterScreen">
 	<Grid Background="#20232A">
 		<Grid.RowDefinitions>
@@ -11,7 +11,7 @@
 
 		<TextBlock Text="GameHub - 2 játékos minigame-ek"
                    Foreground="White"
-                   FontSize="20"
+                   FontSize="30"
                    FontWeight="Bold"
                    Margin="10"
                    HorizontalAlignment="Center"/>
@@ -19,26 +19,34 @@
 		<Border Grid.Row="1"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
-                Width="250"
+                Width="350"
                 Background="#282C34"
                 Padding="20"
                 CornerRadius="8">
 			<StackPanel>
 				<TextBlock Text="Válaszd ki a játékot:"
                            Foreground="White"
-                           FontSize="14"
+                           FontSize="28"
                            Margin="0,0,0,10"
                            HorizontalAlignment="Center"/>
 
 				<Button Content="TicTacToe (X - O)"
                         Margin="0,5"
+                        FontSize="18"
                         Padding="8"
                         Click="TicTacToe_Click"/>
 
                 <Button Content="WASD vs Nyilak"
                         Margin="0,5"
+                        FontSize="18"
                         Padding="8"
                         Click="WasdArrows_Click"/>
+
+                <Button Content="Pong"
+                        Margin="0,5"
+                        FontSize="18"
+                        Padding="8"
+                        Click="Pong_Click"/>
             </StackPanel>
 		</Border>
 	</Grid>

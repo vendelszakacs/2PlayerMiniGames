@@ -1,0 +1,38 @@
+﻿<Window x:Class="_2PlayerMiniGames.PongWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_2PlayerMiniGames"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        Loaded="Window_Loaded"
+        Title="PongWindow" Height="600" Width="800">
+    <Grid Background="#20232A" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock x:Name="StatusText" Foreground="White" FontSize="28" FontWeight="Bold" 
+                       Text="Pong: Piros (W/S) vs Kék (Fel/Le)" HorizontalAlignment="Center"/>
+            <TextBlock Text="A győzelemhez 10 pont kell!" Foreground="Yellow" 
+                       FontSize="18" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <Canvas x:Name="GameCanvas" Grid.Row="1" Background="#282C34">
+            <Rectangle x:Name="RedPaddle" Width="15" Height="90" Fill="Red"/>
+            <Rectangle x:Name="BluePaddle" Width="15" Height="90" Fill="DeepSkyBlue"/>
+            <Ellipse x:Name="Ball" Width="20" Height="20" Fill="White"/>
+        </Canvas>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="Új játék" Height="50" Width="150" FontSize="30" FontWeight="Bold" Click="NewGame_Click"/>
+            <TextBlock x:Name="ScoreText" Foreground="White" FontSize="40" FontWeight="Bold" Margin="30,0,0,0" VerticalAlignment="Center" Text="0 : 0"/>
+        </StackPanel>
+    </Grid>
+</Window>
