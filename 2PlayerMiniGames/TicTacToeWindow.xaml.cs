@@ -1,11 +1,14 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace _2PlayerMiniGames;
 
 public partial class TicTacToeWindow : Window
 {
     private readonly Button[,] _cells;
+    private readonly Queue<Button> _xMoves = new();
+    private readonly Queue<Button> _oMoves = new();
     private char _currentPlayer = 'X';
     private bool _gameOver;
 
@@ -21,39 +24,82 @@ public partial class TicTacToeWindow : Window
         };
     }
 
+    private void Update_Highlight()
+    {
+        foreach (var cell in _cells)
+        {
+            var content = cell.Content?.ToString();
+
+            if (content == "X")
+            {
+                cell.Foreground = Brushes.Blue; 
+            }
+            else if (content == "O")
+            {
+                cell.Foreground = Brushes.Red;
+            }
+            else
+            {
+                
+                cell.Foreground = Brushes.Black;
+            }
+
+            cell.Opacity = 1.0;
+        }
+
+        if (!_gameOver)
+        {
+            if (_xMoves.Count == 3)
+            {
+                var oldestX = _xMoves.Peek();
+                var fadedBlue = new SolidColorBrush(Colors.Blue) { Opacity = 0.4 };
+                fadedBlue.Freeze();
+                oldestX.Foreground = fadedBlue;
+            }
+
+            if (_oMoves.Count == 3)
+            {
+                var oldestO = _oMoves.Peek();
+                var fadedRed = new SolidColorBrush(Colors.Red) { Opacity = 0.4 };
+                fadedRed.Freeze(); 
+                oldestO.Foreground = fadedRed;
+            }
+        }
+    }
+
     private void Cell_Click(object sender, RoutedEventArgs e)
     {
         if (_gameOver) return;
-
         if (sender is not Button button) return;
         if (!string.IsNullOrEmpty(button.Content?.ToString())) return;
 
+        var currentQueue = _currentPlayer == 'X' ? _xMoves : _oMoves;
+
+        Button? removed = null;
+
+        if (currentQueue.Count >= 3)
+        {
+            removed = currentQueue.Dequeue();
+            removed.Content = string.Empty;
+        }
+
         button.Content = _currentPlayer;
+        currentQueue.Enqueue(button);
+
+        Update_Highlight();
 
         if (CheckWin(_currentPlayer))
         {
-            StatusText.Text = $"Nyert: {_currentPlayer}";
+            StatusText.Text = $"Nyert: {_currentPlayer}";  
             _gameOver = true;
-            SetCellsEnabled(false);
-            return;
-        }
-
-        if (IsBoardFull())
-        {
-            StatusText.Text = "Döntetlen!";
-            _gameOver = true;
-            SetCellsEnabled(false);
+            Update_Highlight(); 
             return;
         }
 
         _currentPlayer = _currentPlayer == 'X' ? 'O' : 'X';
         StatusText.Text = $"Következő: {_currentPlayer}";
-    }
 
-    private void SetCellsEnabled(bool enabled)
-    {
-        foreach (var cell in _cells)
-            cell.IsEnabled = enabled;
+        Update_Highlight();
     }
 
     private bool CheckWin(char player)
@@ -80,16 +126,7 @@ public partial class TicTacToeWindow : Window
         return string.IsNullOrEmpty(content) ? '-' : content[0];
     }
 
-    private bool IsBoardFull()
-    {
-        foreach (var cell in _cells)
-        {
-            if (string.IsNullOrEmpty(cell.Content?.ToString()))
-                return false;
-        }
 
-        return true;
-    }
 
     private void NewGame_Click(object sender, RoutedEventArgs e)
     {
@@ -98,7 +135,9 @@ public partial class TicTacToeWindow : Window
             cell.Content = string.Empty;
         }
 
-        SetCellsEnabled(true);
+        _xMoves.Clear();
+        _oMoves.Clear();
+
         _currentPlayer = 'X';
         _gameOver = false;
         StatusText.Text = "Következő: X";
